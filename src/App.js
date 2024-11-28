@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import { useState } from "react";
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase-config';
+import EditPost from './pages/EditPost';
  
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/" element={<Home isAuth={isAuth}/>} />
         <Route path="/createpost" element={<CreatePost isAuth={isAuth}/>} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth}/>} />
+        <Route path="/edit/:id" element={<EditPost />} />
       </Routes>
     </Router>
   );

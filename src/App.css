@@ -187,3 +187,35 @@ textarea {
   overflow: hidden;
   overflow-y: auto;
 }
+
+.commentsSection {
+  margin-top: 10px;
+}
+
+.commentsList .comment {
+  background-color: #f0f0f0;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.addComment {
+  display: flex;
+  margin-top: 10px;
+}
+
+.addComment input {
+  flex: 1;
+  padding: 5px;
+}
+
+.addComment button {
+  padding: 5px 10px;
+  margin-left: 5px;
+}
+
+.title h1 {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
