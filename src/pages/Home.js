@@ -3,7 +3,7 @@ import { getDocs, collection, deleteDoc, doc, addDoc, onSnapshot} from "firebase
 import { db } from "../firebase-config";
 import {Link} from "react-router-dom";
 
-function Home() {
+function Home( {isAuth} ) {
     const [postLists, setPostList] = useState([]);
     const postsCollectionRef = collection(db, "posts");
     const [expandedPostId, setExpandedPostId] = useState(null);
@@ -53,10 +53,14 @@ function Home() {
                             }}>🗑️</button>
                         </div>
                         <div className="EditPost">
-                            <Link to={`/edit/${post.id}`}>
+                            {/* <Link to={`/edit/${post.id}`}>
                                 <button>Edit</button>
-                            </Link>
-
+                            </Link> */}
+                            {isAuth && (
+                                <Link to={`/edit/${post.id}`}>
+                                <button>Edit</button>
+                                </Link>
+                            )}
                         </div>
                     </div>
                     <div className="postTextContainer">
