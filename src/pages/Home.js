@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection, deleteDoc, doc, addDoc, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { getDocs, collection, addDoc, onSnapshot, updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { db, auth } from "../firebase-config";
 import { Link } from "react-router-dom";
-import { FaComment } from "react-icons/fa";
+import DeletePost from './DeletePost'; 
+import { FaComment, FaThumbsUp } from "react-icons/fa";
 import logo from '../blue-archive-tendou-aris.gif';
 
-function Home({ isAuth, currentUser }) {
+function Home({ isAuth }) {
   const [postLists, setPostList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // New state for search input
+  const [searchTerm, setSearchTerm] = useState(""); 
   const postsCollectionRef = collection(db, "posts");
   const [expandedPostId, setExpandedPostId] = useState(null);
 
@@ -20,11 +21,6 @@ function Home({ isAuth, currentUser }) {
     getPosts();
   }, [postsCollectionRef]);
 
-  const deletePost = async (id) => {
-    const postDoc = doc(db, "posts", id);
-    await deleteDoc(postDoc);
-  };
-
   const addComment = async (postId, comment) => {
     const commentsCollectionRef = collection(db, "posts", postId, "comments");
     await addDoc(commentsCollectionRef, { text: comment, timestamp: new Date() });
@@ -34,7 +30,21 @@ function Home({ isAuth, currentUser }) {
     setExpandedPostId((prevId) => (prevId === postId ? null : postId));
   };
 
-  // Filter posts based on search term
+ 
+  const likePost = async (postId, currentLikes) => {
+    const postRef = doc(db, "posts", postId);
+    if (currentLikes.includes(auth.currentUser.uid)) {
+      await updateDoc(postRef, {
+        likes: arrayRemove(auth.currentUser.uid),
+      });
+    } else {
+      await updateDoc(postRef, {
+        likes: arrayUnion(auth.currentUser.uid),
+      });
+    }
+  };
+
+
   const filteredPosts = postLists.filter((post) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -49,10 +59,9 @@ function Home({ isAuth, currentUser }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ marginBottom: "20px", padding: "10px", width: "100%" }}
-        /></div>
-    
+        />
+      </div>
 
-    
       {filteredPosts.map((post) => (
         <div className="post" key={post.id}>
           <img className="image" src={logo} alt="loading..." />
@@ -62,26 +71,39 @@ function Home({ isAuth, currentUser }) {
                 {post.title}
               </h1>
             </div>
-            {isAuth && currentUser?.uid === post.authorId && (
-              <>
-                <div className="deletePost">
-                  <button onClick={() => deletePost(post.id)}>🗑️</button>
-                </div>
-                <div className="EditPost">
-                  <Link to={`/edit/${post.id}`}>
-                    <button>Edit</button>
-                  </Link>
-                </div>
-              </>
+            <div className="deletePost">
+                {post.auther.id === auth.currentUser?.uid && (
+                  <DeletePost postId={post.id} authorId={post.auther.id} />
+                )}
+            </div>
+            <div className="EditPost">
+            {isAuth && (
+                <Link to={`/edit/${post.id}`}>
+                <button>Edit</button>
+                </Link>
             )}
+            </div>
           </div>
           <div className="postTextContainer">{post.postText}</div>
-          <h5>@{post.author?.name || "Unknown"}</h5>
+          <h6>@{post.auther.name || "Unknown"}</h6>
           <FaComment
             onClick={() => toggleComments(post.id)}
             style={{ cursor: "pointer", color: "#007BFF" }}
           />
-          <span style={{ color: "#007BFF" }}> 2</span>
+          <span style={{ color: "#007BFF" }}> X</span>
+
+          {/* Like Button */}
+          <div className="likeButton">
+            <FaThumbsUp
+              onClick={() => likePost(post.id, post.likes || [])}
+              style={{
+                cursor: "pointer",
+                color: post.likes?.includes(auth.currentUser?.uid) ? "blue" : "grey",
+              }}
+            />
+            <span>{post.likes?.length || 0}</span>
+          </div>
+
           {expandedPostId === post.id && (
             <CommentSection postId={post.id} addComment={addComment} />
           )}
