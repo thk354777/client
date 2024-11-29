@@ -81,7 +81,7 @@ function Home({ isAuth, currentUser }) {
             onClick={() => toggleComments(post.id)}
             style={{ cursor: "pointer", color: "#007BFF" }}
           />
-          <span style={{ color: "#007BFF" }}> 1</span>
+          <span style={{ color: "#007BFF" }}> 2</span>
           {expandedPostId === post.id && (
             <CommentSection postId={post.id} addComment={addComment} />
           )}
