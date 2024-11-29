@@ -142,13 +142,14 @@ textarea {
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  background-color: rgb(88, 88, 88);
 }
 
 .homePage .post {
   width: 600px;
   height: auto;
   max-height: 600px;
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(160, 160, 160);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 20px;
   padding: 20px;
@@ -193,7 +194,7 @@ textarea {
 }
 
 .commentsList .comment {
-  background-color: #f0f0f0;
+  background-color: #c8c8c8;
   padding: 5px;
   margin: 5px 0;
   border-radius: 5px;
@@ -216,6 +217,32 @@ textarea {
 
 .title h1 {
   cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+  color: rgb(0, 0, 0);
+}
+
+
+.image {
+  width: 80px;  
+  height: 80px; 
+  border-radius: 50%;  
+  object-fit: cover;   
+  border: 2px solid #007BFF; 
+  margin-bottom: 0px; 
+}
+
+.EditPost button {
+  background-color: #007BFF;
+}
+
+.EditPost button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.search {
+  color: #f44336;
 }

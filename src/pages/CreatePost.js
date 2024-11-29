@@ -15,6 +15,7 @@ function CreatePost({isAuth}) {
             title,
             postText,
             auther: {name: auth.currentUser.displayName, id: auth.currentUser.uid},
+            
         });
         navigate("/");
     };
