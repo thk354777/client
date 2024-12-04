@@ -2,6 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Blog Post Application
+
+This project is a blog post application built with React and Firebase. It allows users to create, read, update, and delete blog posts, with data stored in Firebase for real-time synchronization.
+
+![App Screenshot](./home_page.png)
+
+## Features
+
+- User authentication with Firebase
+- Create, edit, and delete blog posts
+- Real-time updates with Firebase Firestore
+- Responsive design
+
 ## Available Scripts
 
 In the project directory, you can run:

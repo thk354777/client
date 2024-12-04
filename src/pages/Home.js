@@ -77,7 +77,7 @@ function Home({ isAuth }) {
                 )}
             </div>
             <div className="EditPost">
-            {isAuth && (
+            {post.auther.id === auth.currentUser?.uid && (
                 <Link to={`/edit/${post.id}`}>
                 <button>Edit</button>
                 </Link>
@@ -94,15 +94,19 @@ function Home({ isAuth }) {
 
           {/* Like Button */}
           <div className="likeButton">
-            <FaThumbsUp
-              onClick={() => likePost(post.id, post.likes || [])}
-              style={{
-                cursor: "pointer",
-                color: post.likes?.includes(auth.currentUser?.uid) ? "blue" : "grey",
-              }}
-            />
-            <span>{post.likes?.length || 0}</span>
+          {isAuth && (
+                <FaThumbsUp
+                onClick={() => likePost(post.id, post.likes || [])}
+                style={{
+                  cursor: "pointer",
+                  color: post.likes?.includes(auth.currentUser?.uid) ? "blue" : "grey",
+                }}
+                
+              />
+            )}
+            
           </div>
+          <span>{post.likes?.length || 0}</span>
 
           {expandedPostId === post.id && (
             <CommentSection postId={post.id} addComment={addComment} />
