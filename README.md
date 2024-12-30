@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This project is a blog post application built with React and Firebase. It allows users to create, read, update, and delete blog posts, with data stored in Firebase for real-time synchronization.
 
+You can check out the live version of the app here: [https://client-en5m.onrender.com/](https://client-en5m.onrender.com/)
+
 ![App Screenshot](./home_page.png)
 
 ## Features
